@@ -39,11 +39,9 @@ export class ErrorBoundary extends Component<Props, State> {
               </p>
             </CardHeader>
             <CardContent className="space-y-4">
-              {process.env.NODE_ENV === "development" && (
-                <pre className="overflow-auto rounded bg-muted p-3 text-xs">
-                  {this.state.error.message}
-                </pre>
-              )}
+              <pre className="max-h-40 overflow-auto rounded bg-muted p-3 text-xs whitespace-pre-wrap break-words">
+                {this.state.error.message}
+              </pre>
               <Button
                 onClick={() => this.setState({ hasError: false, error: null })}
               >

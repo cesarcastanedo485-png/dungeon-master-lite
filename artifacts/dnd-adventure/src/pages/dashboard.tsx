@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { format } from "date-fns";
 import {
   Sword, Play, Pause, RotateCcw, Send, ScrollText,
   User, ChevronRight, Users, Save, FolderOpen, Trash2,
@@ -30,7 +29,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/hooks/use-user";
 import { useActionStream } from "@/hooks/use-action-stream";
 import { useGameEvents } from "@/hooks/use-game-events";
-import { cn } from "@/lib/utils";
+import { cn, safeFormatDate } from "@/lib/utils";
 import { Soundboard } from "@/components/soundboard";
 
 // Strip markdown and special tokens so TTS sounds natural
@@ -60,7 +59,9 @@ function getBritishMaleVoice(): SpeechSynthesisVoice | null {
 }
 
 function HPBar({ hp, maxHp }: { hp: number; maxHp: number }) {
-  const percentage = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+  const safeMax = maxHp > 0 ? maxHp : 1;
+  const safeHp = Number.isFinite(hp) ? hp : 0;
+  const percentage = Math.max(0, Math.min(100, (safeHp / safeMax) * 100));
   const colorClass = percentage > 50 ? 'bg-emerald-500' : percentage > 25 ? 'bg-amber-500' : 'bg-destructive';
   return (
     <div className="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-white/10 mt-2 shadow-inner">
@@ -229,7 +230,7 @@ function LoadCampaignPanel({ onClose }: { onClose: () => void }) {
               <div className="flex-1 min-w-0">
                 <p className="font-serif font-bold text-amber-200 text-sm truncate">{c.name}</p>
                 <p className="text-xs text-muted-foreground truncate">
-                  {c.dmName} · {format(new Date(c.savedAt), "MMM d, HH:mm")}
+                  {c.dmName} · {safeFormatDate(c.savedAt, "MMM d, HH:mm")}
                 </p>
               </div>
               <button
@@ -279,8 +280,10 @@ export default function Dashboard() {
   const { lastEvent } = useGameEvents();
 
   const { data: gameState, isLoading: isStateLoading } = useGetGameState();
-  const { data: narrative = [], isLoading: isNarrativeLoading } = useGetNarrative();
-  const { data: characters = [] } = useListCharacters();
+  const { data: narrativeData, isLoading: isNarrativeLoading } = useGetNarrative();
+  const narrative = Array.isArray(narrativeData) ? narrativeData : [];
+  const { data: charactersData } = useListCharacters();
+  const characters = Array.isArray(charactersData) ? charactersData : [];
 
   const { mutate: generateDmNameMutation } = useGenerateDmName({
     mutation: {
@@ -643,7 +646,9 @@ Remember: up to four heroes at a time. And the Dungeon Master's word is law. Mos
                       {/* Show custom DM name for DM messages */}
                       {entry.type === 'dm' ? dmName : entry.username}
                     </span>
-                    <span className="text-[10px] text-white/30">{format(new Date(entry.createdAt), 'HH:mm')}</span>
+                    <span className="text-[10px] text-white/30">
+                      {safeFormatDate(entry.createdAt, "HH:mm", "")}
+                    </span>
                   </div>
                 )}
                 <div className={cn(
