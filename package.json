@@ -1,0 +1,34 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "pnpm run typecheck && pnpm --filter @workspace/api-server --filter @workspace/dnd-adventure run build",
+    "build:all": "pnpm run typecheck && pnpm -r --if-present run build",
+    "build:dist": "node scripts/build-dist.mjs",
+    "zip:dist": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\zip-dist.ps1",
+    "typecheck:libs": "pnpm exec tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
+    "env:init": "node scripts/init-env.mjs",
+    "db:push": "node node_modules/drizzle-kit/bin.cjs push --config ./drizzle.config.cjs",
+    "dev:api": ".\\pnpm.cmd --filter @workspace/api-server run dev",
+    "dev:web": ".\\pnpm.cmd --filter @workspace/dnd-adventure run dev"
+  },
+  "private": true,
+  "devDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.60.0",
+    "@tailwindcss/oxide-win32-x64-msvc": "4.2.1",
+    "lightningcss-win32-x64-msvc": "1.31.1",
+    "typescript": "~5.9.2",
+    "prettier": "^3.8.1",
+    "tsx": "catalog:",
+    "drizzle-kit": "^0.31.9"
+  }
+}
+
+

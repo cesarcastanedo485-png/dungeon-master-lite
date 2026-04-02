@@ -1,0 +1,43 @@
+Update your existing Flask-based Dungeons & Dragons adventure game bot (text-based immersive CYOA with Grok DM via Replit AI Integrations, max 4 players, !create/!action/!sheet/!party, start/pause/reset buttons, save/load campaigns, web tabs for Races/Classes/Active Characters/Game Controls, XP/leveling 1-20, simple class skill trees). Keep all current functionality 100% intact—no breaking changes.
+Focus only on improving the Classes tab (you said it already looks beautiful, so preserve the overall style, fantasy cards, colors, and layout):
+
+Make each class card (Wizard, Cleric, Fighter, Rogue, Hunter) clickable.
+When clicked, it expands (use a clean accordion-style or <details><summary> element with smooth CSS animation) to reveal the full skill tree from level 1 through 20.
+Collapse when clicked again.
+For each level (or every 2–3 levels to keep it simple), show at least two skill choices the player could have picked when they leveled up.
+Label them clearly:
+Passive (always on)
+Daily use (once per long rest/day)
+Situational / Combat (usable once per fight or encounter)
+Cantrip (at-will / free action, unlimited)
+Keep everything extremely simple and easy to track (no complex spreadsheets—just clean bullet lists or small cards with short descriptions).
+
+Example structure for each class (you can improve the exact skills, but keep them minimal and flavorful):
+Wizard
+Level 1: Choose between
+
+Cantrip: Mage Hand (at-will)
+Passive: Arcane Scholar (+1 to INT checks)
+
+Level 3: Choose between
+
+Daily: Shield (once per day)
+Situational: Fire Bolt (extra damage in combat)
+
+…and so on up to level 20 with 2–3 choices per major level-up point.
+Do the same for:
+
+Cleric (healing, turning undead, domain spells)
+Fighter (extra attack, action surge, maneuvers)
+Rogue (sneak attack scaling, cunning action, evasion)
+Hunter (favored enemy, hunter’s mark, tracking bonuses)
+When the skill tree expands, make the chosen skills (if any are already selected for a character) highlight in green or with a checkmark. For now, the tab is just for reference/display—actual leveling still happens through Grok in-game.
+Keep the tab scannable: Short descriptions (1 line each), icons/emojis if possible (🔥 for fire spells, 🛡️ for defense, etc.), and a “Back to Classes” link at the bottom of each expanded tree.
+
+Generate the full updated code:
+
+Modifications to templates/index.html (add clickable accordions, skill tree HTML structure, JS for expand/collapse).
+Updates to static/style.css (smooth expand animations, fantasy styling that matches the existing beautiful look, hover effects on class cards).
+Any small changes in app.py if needed to pass class data.
+
+Add comments explaining the new expandable sections. Make sure it still works perfectly with “Always On” and screen-share preview.

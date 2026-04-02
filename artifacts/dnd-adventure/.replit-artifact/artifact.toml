@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "D&D Adventure Bot"
+version = "1.0.0"
+id = "artifacts/dnd-adventure"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 22355
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/dnd-adventure run dev"
+
+[services.env]
+PORT = "22355"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/dnd-adventure", "run", "build"]
+publicDir = "artifacts/dnd-adventure/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

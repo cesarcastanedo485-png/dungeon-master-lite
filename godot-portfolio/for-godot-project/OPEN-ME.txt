@@ -1,0 +1,16 @@
+OPEN THIS FOLDER IN GODOT (easiest path)
+========================================
+
+1. Godot 4.x → Project Manager → Import.
+2. Browse to THIS folder (the one containing project.godot).
+3. Import & Edit.
+
+Main scene is already set. Press F5 (Play) — you should see a dark screen with gold text.
+
+If you already have a different Godot project:
+- Copy main.tscn, main.gd, icon.svg into that project folder.
+- Merge export_presets.cfg with yours or add the Web preset in the editor.
+- Project Settings → Application → Run → Main Scene → res://main.tscn
+- Save project.
+
+Godot MCP note: the editor must be running for MCP tools; this repo ships files so you do not depend on MCP for a working main scene.

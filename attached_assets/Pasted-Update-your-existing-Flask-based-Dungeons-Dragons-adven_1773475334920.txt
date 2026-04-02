@@ -1,0 +1,29 @@
+Update your existing Flask-based Dungeons & Dragons adventure game bot (text-based immersive CYOA with Grok DM via Replit AI Integrations, max 4 players, !create/!action/!sheet/!party, start/pause/reset buttons, save/load campaigns, web tabs for Races [expandable with abilities], Classes [expandable skill trees], Active Characters [expandable sheets], Game Controls, Compendium tab, pre-story DM instructions with custom DM name, XP/leveling 1-20, racial/class sub-choices like Dragonborn ancestry, request-to-join approval system with whitelist/pending/moderation). Keep all current functionality 100% intact—no breaking changes.
+Add a soundboard to the main page (Game Controls or new "Soundboard" section/tab):
+
+Include 5-6 ambient music tracks that are free for commercial use (source from public domain/free libraries like freesound.org, opengameart.org, or cc0 audio—e.g., tavern music with indistinct chatter, intense battle theme, eerie dungeon ambiance, forest exploration, victory fanfare, mystical spellcasting).
+Add 4-6 relevant sound effects (e.g., sword clash, spell whoosh, monster roar, door creak, level-up ding, dice roll).
+Use HTML5 <audio> elements with play/pause/loop buttons; make it simple—click to play/stop, optional volume slider.
+Tracks auto-pause when switching; no auto-play to avoid stream issues.
+
+Add TTS buttons:
+
+"Read Recent DM Response" button: Uses browser SpeechSynthesis API to read the most recent Grok/DM-generated story response aloud. Select a male voice with British accent if available (e.g., 'Google UK English Male' or smoothest equivalent—fall back to default male if not); make voice smooth/clear with adjustable rate/pitch for natural feel.
+"Read Instructions" button: Reads the pre-story DM instructions aloud using the same voice. Make instructions a funny, lighthearted script (e.g., "Ahoy, adventurers! I'm [DM_NAME], your guide to epic chaos. Cesar built this bad boy himself—no dragons were harmed in the coding. To join: Type !request and pray I like your vibe. Once approved, !create your hero like !create elf wizard Luna. Then !action to swing swords or cast spells. Imagination's your weapon—picture the goblin's ugly mug! Party up to 4, level up with XP, and let's roll some invisible dice. Ready? Hit start!").
+TTS cleans text (no symbols read), plays through browser speakers for stream capture.
+
+Update Grok DM system prompt:
+
+Make DM more interactive/invested in characters (e.g., address by name: "Maximus, what do you think of this path?" or "We're near Bob's hometown—Bob, any memories?").
+Loosen rigidity: Allow more flexible, fun narration—less strict rules, more creative flair.
+Allow mature/NSFW content if story leads there (e.g., adult themes, language—align with Replit's policies: keep tasteful, no explicit violations, focus on adventure but permit edgier elements for MA audience).
+Steer towards gameplay but with engaging, character-focused prompts.
+
+Generate the full updated code:
+
+Modifications to app.py (add TTS JS calls via template, update DM prompt, handle sound URLs—use free CC0 sources like 'https://opengameart.org/content/tavern-loop' for tavern, etc.; embed or link safely).
+templates/index.html (add Soundboard section with audio controls/buttons, TTS buttons with onclick JS for SpeechSynthesis, funny instructions script in a variable).
+static/style.css (style soundboard as fantasy panel/buttons, hover effects).
+Add any JS in template for TTS voice selection/rate (e.g., utterance.voice = voices.find(v => v.name.includes('UK English Male'))).
+
+Add comments explaining new features. Ensure everything runs in Replit with "Always On", preview in browser for screen-share, and audio/TTS works on stream (test browser compatibility).

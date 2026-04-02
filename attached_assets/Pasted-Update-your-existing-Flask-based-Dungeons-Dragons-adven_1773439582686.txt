@@ -1,0 +1,32 @@
+Update your existing Flask-based Dungeons & Dragons adventure game bot (text-based immersive CYOA with Grok DM via Replit AI Integrations, max 4 players, !create/!action/!sheet/!party, start/pause/reset buttons, save/load campaigns, web tabs for Races/Classes/Active Characters/Game Controls, XP/leveling 1-20 with simple class skill trees [now with clickable expandable trees showing 2+ choices per level-up, labeled as passive/daily/situational/cantrip], pre-story DM instructions with custom DM name like "Eldric the Chronicler", immersive no fourth-wall). Keep all current functionality 100% intact—no breaking changes.
+
+Focus on improving the **Races tab** (preserve the existing beautiful look, fantasy cards, colors, and layout):
+- Make each race card (Tiefling, Dragonborn, Human, Elf, Halfling, Gnome) **clickable**.  
+  When clicked, it expands (use accordion-style or `<details><summary>` with smooth CSS animation, like the Classes tab) to reveal the **racial abilities**: one cantrip (at-will/free action), one passive (always on), one daily use (once per long rest/day), and one combat/situational skill (usable in fights/encounters).  
+  Keep them simple, not groundbreaking, but unique and impactful enough to influence race choice (e.g., flavorful bonuses like resistance to fire for Dragonborn, or darkvision for Elf).  
+  Be creative: Make abilities balanced and thematic—e.g., Tiefling: Infernal resistance (passive: resist fire/poison), Hellish Rebuke (daily: react to damage with fire burst).  
+  Collapse when clicked again.
+
+Example structure for each race (improve descriptions if needed, keep short/1-line each):
+**Tiefling**  
+- Cantrip: Thaumaturgy (at-will: minor illusions/voice amplification)  
+- Passive: Darkvision (see in dark)  
+- Daily: Darkness (once per day: create magical darkness)  
+- Combat: Hellish Resistance (situational: resist fire/poison damage in fights)  
+
+Do the same for all races: Dragonborn (breath weapon theme), Human (versatile bonuses), Elf (agility/senses), Halfling (luck/nimbleness), Gnome (cunning/illusions).
+
+For the **Active Characters tab**:
+- Make each active character card **clickable** to expand and show the **full character sheet**: Include all details (username, name, race, class, level, XP, HP, stats dict, inventory list, unlocked skills from class tree).  
+  Use a clean, expandable layout (accordion or modal) with sections for stats, skills, etc. (e.g., bold headings, bullet lists/tables for scannability).  
+  If no skills unlocked yet, show "Level up to unlock skills."  
+  Allow collapse/close.
+
+Keep tabs scannable: Short descriptions, icons/emojis (e.g., 🔥 for fire resistance, 👁️ for darkvision), hover effects on cards.
+
+Generate the full updated code:
+- Modifications to `templates/index.html` (add clickable accordions for races/characters, racial abilities HTML, character sheet structure, JS for expand/collapse).
+- Updates to `static/style.css` (smooth expand animations matching Classes tab, fantasy styling, hover/click effects).
+- Any small changes in `app.py` if needed to pass race/class data or handle expands.
+
+Add comments explaining the new expandable sections. Ensure everything runs in Replit with "Always On", preview in browser for screen-share.

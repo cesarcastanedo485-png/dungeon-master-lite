@@ -1,0 +1,7 @@
+﻿DUNGEON MASTERING LITE - END USER TERMS (EULA SNIPPET)
+
+By using this software, you agree:
+1) You received a license to use, not ownership of the source package.
+2) Your purchase covers software access only; third-party API/hosting costs are separate.
+3) You may not redistribute, resell, or repackage the source code.
+4) This software is provided AS IS with no warranty.

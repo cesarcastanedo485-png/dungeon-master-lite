@@ -1,0 +1,26 @@
+Update your existing Flask-based Dungeons & Dragons adventure game bot (text-based immersive CYOA with Grok DM via Replit AI Integrations, max 4 players, !create/!action/!sheet/!party, start/pause/reset buttons, save/load campaigns, web tabs for Races [clickable expandable with racial abilities: cantrip/passive/daily/combat, simple/impactful], Classes [clickable expandable skill trees levels 1-20 with 2+ choices per level-up, labeled passive/daily/situational/cantrip], Active Characters [clickable expandable full sheets with stats/XP/HP/inventory/skills], Game Controls, pre-story DM instructions with custom DM name, immersive no fourth-wall, XP/leveling 1-20). Keep all current functionality 100% intact—no breaking changes.
+
+First, identify and rectify inconsistencies in racial/class abilities (e.g., Dragonborn passive "Resist damage type of your ancestry: fire, cold, lightning, acid, etc." mentions choices but no selection mechanism exists):
+- Scan all races/classes for similar gaps where choices/selections are implied but not implemented (e.g., ancestry for Dragonborn, domains for Cleric if mentioned, fighting styles for Fighter).
+- Fix by adding selection during character creation: Update !create command to !create [race] [class] [name] [optional sub-choice] (e.g., !create dragonborn fighter Drakthar fire for fire ancestry). If no sub-choice, default or prompt Grok to assign.
+- In web app: Add dropdown/inputs in Active Characters tab or creation form for sub-choices when viewing/editing sheets (e.g., for Dragonborn: select ancestry type, update passive ability accordingly).
+- Integrate with Grok DM: Pass sub-choices to party summary in prompts so Grok uses them in narration (e.g., "Your fire ancestry resists the dragon's breath").
+- Ensure fixes make abilities relevant to story (Grok references them in responses, like resistance triggering in fire scenarios).
+
+Add a new **Compendium tab** (glossary/directory like a book's appendix, styled in fantasy theme matching other tabs—parchment background, scrollable list):
+- Compile and explain all verbiage/terminology used site-wide (e.g., from races/classes/abilities/DM responses): 
+  - Keywords like "fire damage" (burns target, may ignite objects, resisted by fire resistance).
+  - Conditions like "frightened" (disadvantage on attacks/ability checks while source is visible, can't move closer).
+  - Ability types: Passive (always active), Daily (once per long rest), Situational/Combat (usable in specific scenarios like fights), Cantrip (at-will/free action).
+  - Game mechanics: Advantage (roll 2d20, take higher), Saving Throw (d20 + modifier vs. DC to resist effect), etc.
+  - Racial/class specifics: E.g., Halfling "brave" (advantage on frightened saves), Dragonborn breath weapon (cone attack based on ancestry).
+- Make it searchable/scrollable: Alphabetical list or accordions with bold terms + 1-2 sentence explanations.
+- Auto-generate/populate from a dict in code (add all terms mentioned in app; make expandable for future).
+
+Generate the full updated code:
+- Modifications to `templates/index.html` (add Compendium tab with glossary content, clickable race/class fixes if needed, expandable character sheets in Active tab).
+- Updates to `app.py` (handle sub-choices in !create/party dict, pass to Grok, compendium data as dict passed to template).
+- `static/style.css` (style Compendium as book/appendix with fantasy font/borders, search bar if easy).
+- Add comments explaining fixes and new tab.
+
+Ensure everything runs in Replit with "Always On", preview in browser for screen-share.

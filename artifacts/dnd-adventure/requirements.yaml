@@ -1,0 +1,17 @@
+packages:
+  "framer-motion": "For immersive entry animations and smooth layout transitions"
+  "date-fns": "For formatting narrative timestamps"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility to merge tailwind classes safely"
+
+images:
+  - path: "artifacts/dnd-adventure/public/images/parchment.png"
+    description: "A dark, seamless medieval aged parchment paper texture, very subtle and immersive"
+    aspect_ratio: "1:1"
+  - path: "artifacts/dnd-adventure/public/images/dungeon-bg.png"
+    description: "A dark, atmospheric fantasy dungeon background with glowing torches and stone walls, concept art style, deep shadows"
+    aspect_ratio: "16:9"
+
+notes:
+  - "The app relies on generated TanStack Query hooks from @workspace/api-client-react"
+  - "The action streaming endpoint is consumed via custom fetch + SSE parsing"

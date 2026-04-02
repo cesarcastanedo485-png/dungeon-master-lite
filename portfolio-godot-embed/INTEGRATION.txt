@@ -1,0 +1,108 @@
+Dungeon Master Lite — Godot web embed for Caesar’s Portfolio
+=============================================================
+
+MCP NOTE (Godot MCP Pro + Cursor)
+---------------------------------
+• Cursor reads MCP from: C:\Users\cmc\.cursor\mcp.json (not only “Claude Code”).
+• A **godot-mcp-pro** entry was added there: node runs
+  D:/dev/godot-mcp-pro/server/build/index.js with GODOT_MCP_PORT=6505.
+  If your full package lives elsewhere, edit **args** to the real **build/index.js**
+  path, then restart Cursor.
+• Godot project: copy **addons/godot_mcp/** into the project’s **addons/** folder,
+  enable **Godot MCP Pro** under Project → Project Settings → Plugins.
+• The **server/** folder comes from the **paid** package (godot-mcp.abyo.net); the
+  free GitHub repo is addon-only. After purchase: cd server → npm install →
+  npm run build → confirm index.js exists at the path in mcp.json.
+• With Godot running and the plugin connected to the same port (**6505**), new
+  Cursor chats should list tools under **godot-mcp-pro** (name may appear with a
+  user- prefix depending on Cursor version).
+• PixelLab MCP still provides Godot tileset docs (resource **pixellab://docs/godot/wang-tilesets**)
+  if you use that pipeline.
+
+IMPORTANT CLARITY
+-----------------
+• The product in THIS repo (Dungeon Master Lite) is a React + Node/Express app with
+  OpenAI and a database — NOT a Godot project.
+• To show a “playable” block on your Next.js portfolio with ZERO API billing, you
+  ship a small Godot game (or demo) as HTML5 export and embed it in an <iframe>.
+  That demo must not use HTTPRequest to your API or OpenAI.
+
+WHAT TO DO IN GODOT
+-------------------
+1. Open Godot 4.x → create a new project (or use your game if it already exists).
+2. Project → Project Settings → Application → Config → Disable any “remote” features
+   you added; do not call paid APIs from GDScript.
+3. Project → Export → Add “Web” preset.
+4. Prefer a SINGLE-THREADED or compatibility export if you hit WASM/thread issues:
+   Export dialog → Variant / thread options depend on Godot version; if the build
+   fails on Vercel or the iframe is blank, try disabling threads in the web template
+   (see Godot docs for your version).
+5. Export to a folder. You should get index.html, .js, .wasm, .pck (names vary).
+
+WHAT TO PUT IN THE NEXT.JS PORTFOLIO (D:\Cesars Portfolio)
+----------------------------------------------------------
+1. Copy the ENTIRE Godot export output into:
+
+     public/games/dml-godot/
+
+   so this URL works locally:
+
+     http://localhost:3000/games/dml-godot/index.html
+
+2. Copy `components/DungeonMasterLiteGodotEmbed.tsx` from this folder into your
+   portfolio, e.g. `components/games/DungeonMasterLiteGodotEmbed.tsx`.
+
+3. Use the component on a page or inside GamesGallery (e.g. “Play demo” opens a
+   dialog with the iframe). Example:
+
+     import { DungeonMasterLiteGodotEmbed } from "@/components/games/DungeonMasterLiteGodotEmbed";
+
+     <DungeonMasterLiteGodotEmbed />
+
+4. If the canvas stays black or Godot logs COOP/COEP errors, merge something like
+   this into next.config.ts (only if needed; try without first):
+
+   async headers() {
+     return [
+       ...(typeof yourExistingHeaders === "function" ? await yourExistingHeaders() : []),
+       {
+         source: "/games/dml-godot/:path*",
+         headers: [
+           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+           { key: "Cross-Origin-Embedder-Policy", value: "require-corp" },
+         ],
+       },
+     ];
+   }
+
+   Scope is only /games/dml-godot/* so the rest of the site stays normal.
+   If you host under public/demos/dungeon-master-lite/, duplicate the block with
+   source: "/demos/dungeon-master-lite/:path*" instead.
+
+5. Commit `public/games/dml-godot/*` and push — Vercel will serve static files.
+
+BLACK SCREEN BUT THE EXPORT LOADS (Godot console in browser)
+--------------------------------------------------------------
+• If the loader appears then fails with: "Can't run project: no main scene defined",
+  set Main Scene in Godot: Project Settings → Application → Run → Main Scene.
+  Save project, re-export Web, replace the whole static folder on the site.
+• That is a Godot project configuration issue, not Next.js or the iframe.
+
+STALE MANIFEST / WRONG start_url
+--------------------------------
+• If manifest.json references a .html file that is not in the folder (e.g. start_url
+  points at "./Dungeon master lite.html" but you only have index.html), fix or delete
+  manifest.json, or re-export and copy the full output again so names stay consistent.
+• Web Portfolio preset here keeps progressive_web_app disabled; a bad manifest often
+  means an old export or mixed files — replace the entire demo directory, not piecemeal.
+
+VERCEL / FILE SIZE
+------------------
+• Godot exports can be large; if you exceed Vercel limits, host the zip on Cloudflare
+  R2 / GitHub Releases / itch.io and set iframe `src` to that HTTPS URL (still no
+  API cost if the game doesn’t call APIs).
+
+OPTIONAL content/portfolio.json
+--------------------------------
+Add a field for your game entry, e.g. `demoEmbedPath: "/games/dml-godot/index.html"`
+and wire GamesGallery to open the embed when set.

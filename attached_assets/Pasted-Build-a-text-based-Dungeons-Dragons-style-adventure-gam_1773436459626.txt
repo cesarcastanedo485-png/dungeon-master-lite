@@ -1,0 +1,29 @@
+Build a text-based Dungeons & Dragons style adventure game bot in Python using Replit, designed as an interactive live stream bot for TikTok Live chat (with easy swap to Twitch later). Use Replit AI Integrations/Core plan to integrate Grok (Grok-beta or similar) as the intelligent Dungeon Master—no external API keys, no image gen, fully text-based. Make it immersive only—no fourth-wall breaks or references to real viewers/chat/streaming.
+Key features:
+
+TikTok chat integration with tiktoklive (pip install tiktoklive).
+Party cap: Maximum 4 active players/characters.
+Character creation locked behind a "Start Game" button in the web app: Users can type !create [race] [class] [name] anytime, but characters are "pending" until game starts or paused.
+Web app (Flask) for browser control/screen-share:
+Tabs/sections (use simple HTML tabs or Bootstrap if easy):
+"Races" tab: Display list of races with basic traits summaries (tiefling: infernal heritage, fire resistance, darkvision; dragonborn: draconic ancestry, breath weapon; human: versatile +1 to all stats; elf: keen senses, trance, darkvision; halfling: lucky, brave, nimble; gnome: gnome cunning, darkvision). Make it visually nice with icons or short cards.
+"Classes" tab: List wizard, cleric, fighter, rogue, hunter (ranger). For each, show a simple skill tree/level progression (1-20, minimal): e.g., wizard (spellcasting, arcane recovery, spell mastery at high levels); cleric (domain spells, channel divinity); fighter (fighting style, action surge, extra attack); rogue (sneak attack scaling, cunning action); hunter (favored enemy, natural explorer, hunter's mark). Use tables or bullet lists for scannability.
+"Active Characters" tab: Table/list of up to 4 active party members (username, character name, race, class, level, XP, HP, basic stats). Allow me (admin) to add/substitute/remove characters via buttons/forms (e.g., select pending user and slot them in).
+"Game Controls" section: "Start Game" button (locks party, begins story), "Pause Game" button (allows adding/substituting characters without ending story), "Reset" button.
+
+Only active characters' usernames can issue !action or other commands; ignore others or reply "Wait for your turn or join when paused."
+
+Commands:
+!create [race] [class] [name] → creates pending character (validate race/class from list).
+!action [description] or natural language → only if user is active player; feed to Grok as action.
+!sheet → show own character sheet (text: name, race, class, level, XP, HP, stats, inventory, active skills).
+!party → list active party (names, levels).
+
+Grok DM system prompt: "You are a fair, immersive Dungeon Master for a classic D&D adventure. Party: [summary of active characters]. Describe scenes vividly in immersive style, handle combat with simulated dice rolls (d20 etc.), award XP for encounters (simple: 100-500 per challenge), level up at thresholds (e.g., 300 to level 2, standard 5e progression). Use simple class features/skill trees for wizard (spell slots, cantrips), cleric (healing, turning undead), fighter (attacks, maneuvers), rogue (sneak attack, stealth), hunter (tracking, ranged bonuses). Keep responses engaging but concise. No fourth-wall breaks—stay in-world."
+XP/Leveling: Track per-character XP in dict, award via Grok response (parse or prompt Grok to include "Award X XP"), level up when thresholds hit (notify in response/console), update simple skill tree unlocks (e.g., at level 3 rogue gets cunning action).
+Start/Pause mechanics: Game starts only after "Start Game" button pressed (Grok begins with intro scene). Pause allows adding/substituting players without resetting story.
+Web display: Show current story narrative, active party summary, and console-like log for screen-share.
+Use replit.db for persistence if possible (save party, story state, XP).
+Make code modular; include comments. Start with TikTok client; add placeholders for twitchio.
+
+Generate the full code structure: main.py (or app.py), Flask setup for web tabs/controls, templates/index.html with tabs, static/css for styling (clean, fantasy theme). Include setup instructions for Replit AI Integrations (select Grok model).

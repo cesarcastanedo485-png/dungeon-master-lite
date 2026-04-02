@@ -1,0 +1,76 @@
+Dungeon Master Light (Godot) → portfolio website — setup checklist
+==================================================================
+
+1) PLUGIN + MCP (already on your machine)
+-----------------------------------------
+• Godot: Project → Project Settings → Plugins → enable "Godot MCP Pro".
+• Godot: run the project once so the plugin can listen (default port 6505 unless you changed it).
+• Cursor: C:\Users\cmc\.cursor\mcp.json should point Node at your built server:
+    "args": [".../server/build/index.js"]
+  After npm run build in the server folder, restart Cursor.
+• In Cursor, the MCP server may show as "user-godot-mcp-pro". If tools fail, Godot
+  isn’t running or the port doesn’t match GODOT_MCP_PORT.
+
+2) Wire this Godot project to the embed path
+---------------------------------------------
+EASIEST: open the mini project that already has Main Scene set:
+• In Godot Project Manager → Import → select folder:
+    godot-portfolio/for-godot-project/
+  (must contain project.godot). Press Play — you should see on-screen text, not black.
+
+• Portfolio serves the game at one of these (pick one and match your iframe src):
+    /games/dml-godot/index.html
+    /demos/dungeon-master-lite/index.html   (example: public/demos/dungeon-master-lite/)
+
+ALTERNATIVE: copy files into an existing Godot project (same folder as project.godot):
+    export_presets.cfg (merge or replace Web preset)
+    main.gd, main.tscn, icon.svg
+    Optionally merge run/main_scene from for-godot-project/project.godot into yours.
+• In Godot: Project → Project Settings → Application → Run → Main Scene → res://main.tscn
+  if not already set. Save the project (Project → Save).
+  If Main Scene is empty, the Web export will still build but the browser console shows:
+    Error: Can't run project: no main scene defined in the project.
+  The canvas stays black; this is NOT a Next.js / iframe / parallax bug.
+
+2b) After fixing Main Scene (or any export setting)
+---------------------------------------------------
+• Export Web again, then replace the ENTIRE folder under public/ (every file). Do not
+  mix an old manifest or .html name with a new index.html — stale files cause confusing
+  errors (e.g. manifest.json start_url pointing at a missing "./Something.html" while
+  you actually load index.html).
+
+3) Install Web export templates (once per Godot install)
+--------------------------------------------------------
+• Editor → Manage Editor → Export Templates → Download (match your engine version).
+• Without templates, Web export will error.
+
+4) Export for the website
+-------------------------
+• Project → Export → select "Web Portfolio".
+• Export path should be:  export/web/index.html  (folder export/web/ next to project.godot).
+• Click "Export Project". You should see index.html plus .js / .wasm / .pck (names vary).
+
+5) Copy build into Next.js portfolio
+-------------------------------------
+From PowerShell (fix paths if your project or portfolio lives elsewhere):
+
+  powershell -NoProfile -ExecutionPolicy Bypass -File `
+    "E:\Dungeon Master Lite\godot-portfolio\scripts\Copy-GodotWebExportToPortfolio.ps1" `
+    -GodotProjectPath "C:\path\to\Your Dungeon Master Light folder"
+
+Default portfolio target: D:\Cesars Portfolio\public\games\dml-godot
+
+6) Next.js page
+---------------
+• Copy portfolio-godot-embed/components/DungeonMasterLiteGodotEmbed.tsx into the portfolio
+  repo and render it on the page or in GamesGallery (iframe src defaults to
+  /games/dml-godot/index.html).
+
+7) No API charges
+-----------------
+• This path is static files only. Do not add HTTPRequest to your OpenAI/Express API in the
+  Godot demo if you want zero server billing from visitors.
+
+If Godot rewrites export_presets.cfg when you open Export, keep thread_support off for
+fewer iframe/COOP issues; turn on only if you need threads and you add matching headers
+on Vercel (see portfolio-godot-embed/INTEGRATION.txt).
