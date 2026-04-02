@@ -32,8 +32,13 @@ export function Layout({ children }: { children: ReactNode }) {
   }, [lastEvent, setLocation, queryClient]);
 
   const navItems = [
-    { href: "/", label: "Adventure", icon: Scroll },
-    { href: "/testing", label: "Testing", icon: FlaskConical },
+    {
+      href: "/",
+      label: "Testing",
+      icon: FlaskConical,
+      isActive: (loc: string) => loc === "/" || loc === "/testing",
+    },
+    { href: "/adventure", label: "Adventure", icon: Scroll },
     { href: "/characters", label: "Characters", icon: Users },
     { href: "/classes", label: "Classes", icon: Shield },
     { href: "/races", label: "Races", icon: BookOpen },
@@ -66,7 +71,10 @@ export function Layout({ children }: { children: ReactNode }) {
 
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
-              const isActive = location === item.href;
+              const isActive =
+                "isActive" in item && typeof item.isActive === "function"
+                  ? item.isActive(location)
+                  : location === item.href;
               const Icon = item.icon;
               return (
                 <Link

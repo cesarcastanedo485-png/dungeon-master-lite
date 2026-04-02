@@ -11,10 +11,10 @@ export default function GodotEmbedPage() {
       <header className="relative z-10 w-full max-w-5xl flex items-center justify-between gap-4 mb-6">
         <p className="font-serif text-lg text-primary text-glow">Dungeon Master Lite</p>
         <Link
-          href="/"
+          href="/adventure"
           className="text-sm text-muted-foreground hover:text-primary transition-colors shrink-0"
         >
-          Open full app
+          Open Adventure
         </Link>
       </header>
       <div className="relative z-10 w-full flex justify-center">

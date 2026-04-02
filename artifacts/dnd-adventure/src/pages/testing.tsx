@@ -315,9 +315,9 @@ export default function TestingPage() {
             Open Characters (full app)
           </Button>
         </Link>
-        <Link href="/">
+        <Link href="/adventure">
           <Button variant="ghost" className="w-full text-muted-foreground">
-            ← Back to Adventure
+            ← Open Adventure (full session)
           </Button>
         </Link>
       </div>

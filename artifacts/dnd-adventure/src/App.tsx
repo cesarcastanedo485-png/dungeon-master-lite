@@ -33,12 +33,13 @@ function MainShell() {
   return (
     <Layout>
       <Switch>
-        <Route path="/" component={Dashboard} />
+        <Route path="/" component={Testing} />
+        <Route path="/testing" component={Testing} />
+        <Route path="/adventure" component={Dashboard} />
         <Route path="/characters" component={Characters} />
         <Route path="/races" component={Races} />
         <Route path="/classes" component={Classes} />
         <Route path="/compendium" component={Compendium} />
-        <Route path="/testing" component={Testing} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
