@@ -5,7 +5,7 @@ import { getGetNarrativeQueryKey, getListCharactersQueryKey } from "@workspace/a
 import { useUser } from "@/hooks/use-user";
 import { useGameEvents } from "@/hooks/use-game-events";
 import { cn } from "@/lib/utils";
-import { Scroll, Users, BookOpen, Shield, Settings, Search } from "lucide-react";
+import { Scroll, Users, BookOpen, Shield, Settings, Search, FlaskConical } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { LookupPopup } from "@/components/lookup-popup";
 
@@ -33,6 +33,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
   const navItems = [
     { href: "/", label: "Adventure", icon: Scroll },
+    { href: "/testing", label: "Testing", icon: FlaskConical },
     { href: "/characters", label: "Characters", icon: Users },
     { href: "/classes", label: "Classes", icon: Shield },
     { href: "/races", label: "Races", icon: BookOpen },

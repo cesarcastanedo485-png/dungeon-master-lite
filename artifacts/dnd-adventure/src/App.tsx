@@ -16,6 +16,7 @@ import Characters from "@/pages/characters";
 import Races from "@/pages/races";
 import Classes from "@/pages/classes";
 import Compendium from "@/pages/compendium";
+import Testing from "@/pages/testing";
 import NotFound from "@/pages/not-found";
 import GodotEmbedPage from "@/pages/godot-embed";
 
@@ -37,6 +38,7 @@ function MainShell() {
         <Route path="/races" component={Races} />
         <Route path="/classes" component={Classes} />
         <Route path="/compendium" component={Compendium} />
+        <Route path="/testing" component={Testing} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
