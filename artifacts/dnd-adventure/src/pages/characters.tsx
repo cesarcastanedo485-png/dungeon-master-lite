@@ -319,7 +319,8 @@ function CharacterCard({ char, isActive, activePartyCount }: { char: Character; 
 export default function Characters() {
   const { username } = useUser();
   const queryClient = useQueryClient();
-  const { data: characters = [], isLoading } = useListCharacters();
+  const { data: charactersData, isLoading } = useListCharacters();
+  const characters = Array.isArray(charactersData) ? charactersData : [];
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const DEFAULT_RACE = RACES[0] ?? "tiefling";
   const DEFAULT_CLASS = CLASSES[0] ?? "wizard";
